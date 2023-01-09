@@ -18,20 +18,24 @@ class TextField_ extends StatelessWidget {
   final Color focusedBorderColor = Constants.focusedBorderColor;
   final Color errorBorderColor = Constants.errorBorderColor;
   final TextEditingController controller;
+  // String email;
  TextField_({
     super.key,
     required this.obscure,
     required this.hintText,
     required this.icon,
-    required this.controller
+    required this.controller,
+    // required this.email
      });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    String email;
+    return TextFormField(
                   controller: controller,
                   showCursor: false,
                   obscureText: obscure,
+                 
                   decoration: InputDecoration(
                     prefixIcon: Icon(icon,color: Constants.primaryColor,),
                     hintText: hintText,
@@ -55,6 +59,7 @@ class TextField_ extends StatelessWidget {
                           width: 1.0,
                         )),
                   ),
+                 
                 );
   }
 }

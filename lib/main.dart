@@ -1,5 +1,7 @@
-import 'package:chatapp/screens/home_page_.dart';
-import 'package:chatapp/screens/signup.dart';
+// ignore_for_file: duplicate_import, prefer_const_constructors
+
+import 'package:chatapp/screens/homePage.dart';
+import 'package:chatapp/screens/login.dart';
 import 'package:chatapp/shared/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -31,12 +33,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // ignore: unnecessary_new
       theme: new ThemeData(
-        scaffoldBackgroundColor: const Color(0xfffff),
+        scaffoldBackgroundColor: Color.fromRGBO(255, 255, 255,1),
         primaryColor: Constants.primaryColor,
         ),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const SignUp(),
+      home: HomePage(),
     );
   }
 }

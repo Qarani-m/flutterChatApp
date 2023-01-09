@@ -1,29 +1,93 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:chatapp/screens/login.dart';
+import 'package:chatapp/widgets/newRoom.dart';
+import 'package:chatapp/widgets/textField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+   _connectSocket(){
+    print("object");
+  {
+    try {
+      Socket socket;
+    
+      socket = io('http://127.0.0.1:3010', <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      });
+      // Connect to websocket
+      socket.connect();
+     
+      // Handle socket events
+      socket.on('connect', (_){
+
+        socket.on('disconnect', (_) => print('disconnect'));
+      });
+      socket.on('fromServer', (_) => print(_));
+
+    } catch (e) {
+      print("some error");
+      // print(e.toString());
+    }
+
+   
+  }
+
+   }
+
+
 class _HomePageState extends State<HomePage> {
+
+   @override
+   void initState(){
+    super.initState();
+    _connectSocket();
+   }
   @override
   Widget build(BuildContext context) {
+    TextEditingController _newGroupTextController = TextEditingController();
+    int _selectedIndex=0;
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         title: Text("Groups"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        elevation: 2,
-        // backgroundColor: Colors.white,
-        foregroundColor: Colors.white,
-        tooltip: "add",
-        child: Icon(Icons.add),
+      bottomNavigationBar: BottomAppBar(
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap:(value){
+            
+            print(value);
+            setState(() {
+              ifnewGroupPopUp(newGroupTextController: _newGroupTextController);
+              
+            });
+          },
+          items: [
+          BottomNavigationBarItem(
+          icon: Icon(Icons.home_max_sharp),
+          label: ""
+          ),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.add),
+          label: ""
+          ),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.group
+          ),
+          label: ""
+          )
+        ]),
       ),
+
       drawer: Drawer(
         elevation: 10,
         child: Column(
@@ -95,7 +159,7 @@ class _HomePageState extends State<HomePage> {
         ),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left:20,top:10),
+          padding: const EdgeInsets.only(left:10,top:10),
           child: ListView(
             children: [
               ListTile(
@@ -113,5 +177,8 @@ class _HomePageState extends State<HomePage> {
           
         ),
     );
+  // }
+
+
   }
 }

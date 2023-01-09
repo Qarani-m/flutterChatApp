@@ -2,6 +2,8 @@
 
 import 'package:chatapp/screens/homePage.dart';
 import 'package:chatapp/screens/login.dart';
+import 'package:chatapp/services/auth.dart';
+import 'package:chatapp/shared/constants.dart';
 import 'package:chatapp/widgets/textField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,20 +18,23 @@ class SignUp extends StatefulWidget {
 }
 class _SignUpState extends State<SignUp> {
   final formKey = GlobalKey<FormState>();
+  bool _isLoading =false;
+  AuthServices authServices = AuthServices();
+
     TextEditingController _usernameTextController = TextEditingController();
     TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-         Padding(
+      body: _isLoading? Center(child: CircularProgressIndicator(color: Constants.primaryColor,)): Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Form(
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+               
                 Groupie(image: "signup.png", text: "Login in now for nice stuff"),
                 SizedBox( height: 10,),
                 TextField_(obscure: false, hintText: "Full names", icon: Icons.person,controller: _usernameTextController,),
@@ -39,6 +44,7 @@ class _SignUpState extends State<SignUp> {
                 TextField_(obscure: true, hintText: "password", icon: Icons.password_sharp,controller: _passwordTextController,),
                 SizedBox(height: 30,),
                 LoginSignUpBtn(btn_width: MediaQuery.of(context).size.width * 0.8, btn_height: 50, elevation: 12.0, text: "Sign up",onPressed: (){
+                  Signup();
                   FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email:_emailTextController.text,
                     password:_passwordTextController.text
@@ -59,4 +65,17 @@ class _SignUpState extends State<SignUp> {
         ),
     );
   }
+
+
+ Signup() async{
+  if(formKey.currentState!.validate()){
+    setState((){
+      _isLoading =true;
+
+    });
+
+    }
+  }
+
 }
+// }

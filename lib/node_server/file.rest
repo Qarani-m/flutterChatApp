@@ -1,0 +1,20 @@
+POST  http://localhost:3010/signup
+Content-Type: application/json
+
+{
+    "username":"martin",
+    "userid":"uid",
+    "user_email":"u_email",
+    "user_profile":"uemail"
+}
+
+###
+Get http://localhost:3010/login
+
+
+###
+Get http://localhost:3010/saveMsg
+
+###
+Get http://localhost:3010/getAllMsg
+
