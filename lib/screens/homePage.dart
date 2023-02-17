@@ -13,44 +13,9 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-   _connectSocket(){
-    print("object");
-  {
-    try {
-      Socket socket;
-    
-      socket = io('http://127.0.0.1:3010', <String, dynamic>{
-        'transports': ['websocket'],
-        'autoConnect': false,
-      });
-      // Connect to websocket
-      socket.connect();
-     
-      // Handle socket events
-      socket.on('connect', (_){
-
-        socket.on('disconnect', (_) => print('disconnect'));
-      });
-      socket.on('fromServer', (_) => print(_));
-
-    } catch (e) {
-      print("some error");
-      // print(e.toString());
-    }
-
-   
-  }
-
-   }
 
 
 class _HomePageState extends State<HomePage> {
-
-   @override
-   void initState(){
-    super.initState();
-    _connectSocket();
-   }
   @override
   Widget build(BuildContext context) {
     TextEditingController _newGroupTextController = TextEditingController();
@@ -65,11 +30,6 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _selectedIndex,
           onTap:(value){
             
-            print(value);
-            setState(() {
-              ifnewGroupPopUp(newGroupTextController: _newGroupTextController);
-              
-            });
           },
           items: [
           BottomNavigationBarItem(
